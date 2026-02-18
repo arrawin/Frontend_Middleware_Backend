@@ -22,3 +22,13 @@ def update_leave_status(db: Session, leave_id: int, status: str):
     db.commit()
     db.refresh(leave)
     return leave
+
+def delete_leave(db: Session, leave_id: int):
+    leave = get_leave_by_id(db, leave_id)
+    if not leave:
+        return None
+
+    db.delete(leave)
+    db.commit()
+    return leave
+
