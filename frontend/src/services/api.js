@@ -1,4 +1,4 @@
-const API_BASE = "https://leave-backend.onrender.com";
+const API_BASE = "https://demo-backend-6q3a.onrender.com";
 
 export const getLeaves = async () => {
   const res = await fetch(`${API_BASE}/leaves/`);
