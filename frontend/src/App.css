@@ -52,6 +52,18 @@ body {
   border-radius: var(--radius);
 }
 
+select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 6px;
+  font-size: 15px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+
 .status-banner {
   margin-top: 15px;
   padding: 12px;

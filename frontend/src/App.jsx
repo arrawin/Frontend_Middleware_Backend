@@ -1,15 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CreateLeave from "./CreateLeave";
-import Dashboard from "./dashboard";
+import Dashboard from "./Dashboard";
+import { getLeaves } from "./services/api";
 import "./App.css";
 
 function App() {
   const [message, setMessage] = useState(null);
-  const [refreshFlag, setRefreshFlag] = useState(false);
+  const [leaves, setLeaves] = useState([]);
 
-  const triggerRefresh = () => {
-    setRefreshFlag((prev) => !prev);
+  const loadLeaves = async () => {
+    try {
+      const data = await getLeaves();
+      setLeaves(data);
+    } catch (error) {
+      setMessage({
+        type: "error",
+        text: "Failed to load leave records",
+      });
+    }
   };
+
+  useEffect(() => {
+    loadLeaves();
+  }, []);
 
   return (
     <div className="page">
@@ -26,11 +39,12 @@ function App() {
       <div className="content">
         <CreateLeave
           setMessage={setMessage}
-          triggerRefresh={triggerRefresh}
+          loadLeaves={loadLeaves}
         />
         <Dashboard
+          leaves={leaves}
           setMessage={setMessage}
-          refreshFlag={refreshFlag}
+          loadLeaves={loadLeaves}
         />
       </div>
     </div>

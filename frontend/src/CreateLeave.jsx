@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createLeave } from "./services/api";
 
-function CreateLeave({ setMessage, triggerRefresh }) {
+function CreateLeave({ setMessage, loadLeaves }) {
   const initialFormState = {
     employee_name: "",
     leave_type: "",
@@ -17,33 +17,27 @@ function CreateLeave({ setMessage, triggerRefresh }) {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      const response = await createLeave(form);
+  const response = await createLeave(form);
 
-      if (response.httpStatus === 200 || response.httpStatus === 201) {
-        setMessage({
-          type: "success",
-          text: `Leave submitted successfully (Status ${response.httpStatus})`,
-        });
+  if (response.ok) {
+    setMessage({
+      type: "success",
+      text: "Leave submitted successfully",
+    });
 
-        setForm(initialFormState);
+    setForm(initialFormState);
 
-        triggerRefresh(); // 🔥 refresh dashboard
-      } else {
-        setMessage({
-          type: "error",
-          text: response.data?.detail || "Request failed",
-        });
-      }
-    } catch (error) {
-      setMessage({
-        type: "error",
-        text: "Server error occurred",
-      });
-    }
-  };
+    await loadLeaves();  // refresh immediately
+  } else {
+    setMessage({
+      type: "error",
+      text: response.data?.detail || "Request failed",
+    });
+  }
+};
+
 
   return (
     <div className="card">
@@ -62,12 +56,19 @@ function CreateLeave({ setMessage, triggerRefresh }) {
 
         <div>
           <label>Leave Type</label>
-          <input
-            name="leave_type"
-            value={form.leave_type}
-            onChange={handleChange}
-            required
-          />
+          <select
+  name="leave_type"
+  value={form.leave_type}
+  onChange={handleChange}
+  required
+>
+  <option value="">Select Leave Type</option>
+  <option value="Sick">Sick</option>
+  <option value="Casual">Casual</option>
+  <option value="Annual">Annual</option>
+  <option value="Work From Home">Work From Home</option>
+</select>
+
         </div>
 
         <div>

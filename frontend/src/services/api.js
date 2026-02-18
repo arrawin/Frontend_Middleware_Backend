@@ -11,8 +11,16 @@ export const createLeave = async (data) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  return res.json();
+
+  const responseData = await res.json();
+
+  return {
+    httpStatus: res.status,
+    ok: res.ok,
+    data: responseData,
+  };
 };
+
 
 export const approveLeave = async (id) => {
   const res = await fetch(`${API_BASE}/leaves/${id}/approve`, {

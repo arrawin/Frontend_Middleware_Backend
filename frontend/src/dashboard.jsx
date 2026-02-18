@@ -1,24 +1,6 @@
-import { useEffect, useState } from "react";
-import { getLeaves, approveLeave, rejectLeave } from "./services/api";
+import { approveLeave, rejectLeave } from "./services/api";
 
-function Dashboard({ setMessage, refreshFlag }) {
-  const [leaves, setLeaves] = useState([]);
-
-  const loadLeaves = async () => {
-    try {
-      const data = await getLeaves();
-      setLeaves(data);
-    } catch (error) {
-      setMessage({
-        type: "error",
-        text: "Failed to load leave records",
-      });
-    }
-  };
-
-  useEffect(() => {
-    loadLeaves();
-  }, [refreshFlag]); // 🔥 reload when flag changes
+function Dashboard({ leaves, setMessage, loadLeaves }) {
 
   const handleApprove = async (id) => {
     try {
@@ -26,10 +8,10 @@ function Dashboard({ setMessage, refreshFlag }) {
 
       setMessage({
         type: "success",
-        text: `Leave approved (Status ${response.httpStatus})`,
+        text: "Leave approved",
       });
 
-      loadLeaves();
+      await loadLeaves();
     } catch (error) {
       setMessage({
         type: "error",
@@ -44,10 +26,10 @@ function Dashboard({ setMessage, refreshFlag }) {
 
       setMessage({
         type: "error",
-        text: `Leave rejected (Status ${response.httpStatus})`,
+        text: "Leave rejected",
       });
 
-      loadLeaves();
+      await loadLeaves();
     } catch (error) {
       setMessage({
         type: "error",
@@ -75,7 +57,7 @@ function Dashboard({ setMessage, refreshFlag }) {
 
         <tbody>
           {leaves
-            .filter((leave) => leave.status !== "Rejected") // hide rejected
+            .filter((leave) => leave.status !== "Rejected")
             .map((leave) => (
               <tr key={leave.id}>
                 <td>{leave.id}</td>
@@ -85,9 +67,7 @@ function Dashboard({ setMessage, refreshFlag }) {
                 <td>{leave.end_date}</td>
 
                 <td>
-                  <span
-                    className={`status ${leave.status.toLowerCase()}`}
-                  >
+                  <span className={`status ${leave.status.toLowerCase()}`}>
                     {leave.status}
                   </span>
                 </td>
@@ -95,15 +75,10 @@ function Dashboard({ setMessage, refreshFlag }) {
                 <td>
                   {leave.status === "Pending" && (
                     <>
-                      <button
-                        onClick={() => handleApprove(leave.id)}
-                      >
+                      <button onClick={() => handleApprove(leave.id)}>
                         Approve
                       </button>
-
-                      <button
-                        onClick={() => handleReject(leave.id)}
-                      >
+                      <button onClick={() => handleReject(leave.id)}>
                         Reject
                       </button>
                     </>
