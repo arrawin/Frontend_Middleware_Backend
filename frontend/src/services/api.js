@@ -1,4 +1,4 @@
-const API_BASE = "http://127.0.0.1:8000";
+const API_BASE = "https://leave-backend.onrender.com";
 
 export const getLeaves = async () => {
   const res = await fetch(`${API_BASE}/leaves/`);
