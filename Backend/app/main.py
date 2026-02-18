@@ -13,7 +13,8 @@ app.middleware("http")(logging_middleware)
 # CORS for local frontend development
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://demo-frontend-xljb.onrender.com",
+        "http://localhost:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
