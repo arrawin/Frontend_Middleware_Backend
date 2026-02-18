@@ -1,6 +1,6 @@
 import { useState } from "react";
 import CreateLeave from "./CreateLeave";
-import Dashboard from "./Dashboard";
+import Dashboard from "./dashboard";
 import "./App.css";
 
 function App() {
