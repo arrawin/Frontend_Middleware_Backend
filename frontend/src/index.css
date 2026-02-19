@@ -1,4 +1,5 @@
-/* ── Reset & Base ── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 *,
 *::before,
 *::after {
@@ -7,41 +8,18 @@
   padding: 0;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-:root {
-  --primary: #6366f1;
-  --primary-light: #818cf8;
-  --primary-dark: #4f46e5;
-  --accent: #06b6d4;
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #ef4444;
-  --bg: #0f172a;
-  --surface: #1e293b;
-  --surface2: #273447;
-  --border: rgba(148, 163, 184, 0.12);
-  --text: #f1f5f9;
-  --text-muted: #94a3b8;
-  --radius: 14px;
-  --radius-sm: 8px;
-  --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
-  --shadow-glow: 0 0 40px rgba(99, 102, 241, 0.18);
-  --font: 'Inter', system-ui, sans-serif;
-  --transition: 150ms cubic-bezier(.4, 0, .2, 1);
-}
-
-html,
-body,
-#root {
-  height: 100%;
+html {
+  font-size: 15px;
 }
 
 body {
-  font-family: var(--font);
-  background: var(--bg);
-  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f4f6f9;
+  color: #1a1d23;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: 1.6;
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
 }
