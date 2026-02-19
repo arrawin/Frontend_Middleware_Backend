@@ -24,28 +24,35 @@ function App() {
     loadLeaves();
   }, []);
 
+  // Auto-dismiss banner after 4 s
+  useEffect(() => {
+    if (!message) return;
+    const t = setTimeout(() => setMessage(null), 4000);
+    return () => clearTimeout(t);
+  }, [message]);
+
   return (
     <div className="page">
-      <div className="header">
-        Leave Management System
-      </div>
+      {/* ── Header ── */}
+      <header className="header">
+        <div className="header-icon">🗓️</div>
+        <div>
+          <div className="header-title">Leave Management System</div>
+        </div>
+        <span className="header-sub">HR Portal</span>
+      </header>
 
+      {/* ── Status banner ── */}
       {message && (
         <div className={`status-banner ${message.type}`}>
           {message.text}
         </div>
       )}
 
+      {/* ── Main content ── */}
       <div className="content">
-        <CreateLeave
-          setMessage={setMessage}
-          loadLeaves={loadLeaves}
-        />
-        <Dashboard
-          leaves={leaves}
-          setMessage={setMessage}
-          loadLeaves={loadLeaves}
-        />
+        <CreateLeave setMessage={setMessage} loadLeaves={loadLeaves} />
+        <Dashboard leaves={leaves} setMessage={setMessage} loadLeaves={loadLeaves} />
       </div>
     </div>
   );
